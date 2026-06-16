@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - BananaPeel Inc.</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Custom additions just for the dashboard look */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .stat-box {
+      background: #0f131a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: var(--accent);
+      margin-top: 10px;
+    }
+    .full-width {
+      grid-column: span 2;
+    }
+    @media (max-width: 600px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="fake-header">
+    <div class="header-logo">
+      <span>BananaPeel Inc.</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="index.html">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="split-card" style="flex-direction: column; padding: 40px; max-width: 650px;">
+    <h1 style="font-size: 24px; margin-top: 0; color: var(--text);">
+      Welcome to Your Intelligence Dashboard
+    </h1>
+    <p style="color: var(--muted); line-height: 1.6;">
+      Your account has been securely processed. Below you can view real-time application analytics synced directly from your cloud database infrastructure.
+    </p>
+
+    <div class="dashboard-grid">
+      <div class="stat-box">
+        <div style="color: var(--muted); font-size: 14px;">👀 Total Website Visits</div>
+        <div class="stat-number" id="visitCount">Loading...</div>
+      </div>
+      
+      <div class="stat-box">
+        <div style="color: var(--muted); font-size: 14px;">🔐 Total Successful Logins</div>
+        <div class="stat-number" id="loginCount">Loading...</div>
+      </div>
+
+      <div class="stat-box full-width" style="text-align: left;">
+        <h3 style="margin-top: 0; color: var(--text); font-size: 16px;">Security Recommendation</h3>
+        <p style="color: var(--muted); font-size: 14px; line-height: 1.5; margin-bottom: 0;">
+          This platform utilizes advanced heuristics to determine metadata footprints. Ensure your primary authorization strings are complex and distinct across independent web applications.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="fake-footer">
+    <p>&copy; 2026 BananaPeel Inc. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // 1) Initialize your Supabase client here as well
+    const supabaseUrl = 'https://evzdxqjvevibtzbmwzub.supabase.co'; 
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV2emR4cWp2ZXZpYnR6Ym13enViIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0MzkyNjYsImV4cCI6MjA5NzAxNTI2Nn0.-0qyrnKf9EPbAYltuqibkY2y77Qqwnd98opQQg-EOE8'; 
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // 2) Fetch counts and inject them into the HTML elements
+    async function loadDashboardStats() {
+      try {
+        // Fetch total count from 'visits' table
+        // Inside welcome.html, modify line 74 to point to 'visitors':
+const { count: totalVisits, error: visitErr } = await supabaseClient
+  .from('visits')    
+  .select('*', { count: 'exact', head: true });
+
+        // Fetch total count from 'users' table
+        const { count: totalLogins, error: loginErr } = await supabaseClient
+          .from('users')
+          .select('*', { count: 'exact', head: true });
+
+        // Update UI if there are no errors
+        if (!visitErr) {
+          document.getElementById('visitCount').textContent = totalVisits;
+        } else {
+          document.getElementById('visitCount').textContent = "Error";
+        }
+
+        if (!loginErr) {
+          document.getElementById('loginCount').textContent = totalLogins;
+        } else {
+          document.getElementById('loginCount').textContent = "Error";
+        }
+      } catch (err) {
+        console.error("Dashboard data load exception:", err);
+      }
+    }
+
+    // Run the loader immediately when the dashboard opens
+    loadDashboardStats();
+  </script>
+</body>
+</html>

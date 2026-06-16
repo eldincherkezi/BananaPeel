@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Page</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header class="fake-header">
+    <div class="header-logo">
+
+      
+      <span>BananaPeel Inc.</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="split-card" id="mainCard">
+    <div class="info-side">
+      <h2>Reverse Lookup Intelligence</h2>
+      <p>
+        BananaPeel helps you understand your digital footprint. We cross-reference your information across public databases, breached records, and data brokers.
+      </p>
+      <div class="algorithm-details">
+        <h3>How it Works</h3>
+        <p>
+          Our Open-Source Intelligence (OSINT) algorithm aggregates metadata associated with your username and email address from over 500+ repositories. It correlates age demographics with password exposure probabilities to determine your online vulnerability surface area.
+        </p>
+      </div>
+    </div>
+    
+    <div class="form-side">
+      <div class="logo" style="margin-bottom:10px;"> BananaPeel <small>Inc.</small></div>
+      <h1 style="font-size: 18px; line-height: 1.4; margin-top: 0;">You must log in to use our services</h1>
+
+      <form id="loginForm" novalidate>
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required />
+
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" placeholder="Enter age" min="13" max="120" required />
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+
+        <label for="password">Password</label>
+        <div class="pass-wrap">
+          <input type="password" id="password" name="password" placeholder="Enter password" required />
+          <button type="button" id="toggle" class="toggle" aria-label="Show password">👁</button>
+        </div>
+
+        <button type="submit" class="btn">Log In</button>
+      </form>
+
+      <p class="note"><a href="#">Privacy Policy</a></p>
+    </div>
+  </main>
+
+  <footer class="fake-footer">
+    <p>&copy; 2026 BananaPeel Inc. All rights reserved.</p>
+    <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+  </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="strength.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
